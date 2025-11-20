@@ -1,0 +1,11 @@
+tensorflow
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+joblib
+tensorflowjs
+PyMuPDF  # For PDF text extraction
+sentence-transformers  # For multilingual embeddings
+torch  # Required for sentence transformers

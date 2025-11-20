@@ -1,0 +1,48 @@
+# AI Model Files
+*.h5
+*.tflite
+*.pkl
+*.npy
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build outputs
+build/
+dist/
+
+# Large datasets (uncomment if you want to include sample data)
+Ai datasets/
+knowledge_base/embeddings.npy
+# knowledge_base/documents.json

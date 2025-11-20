@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetal Health Model Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        #output {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: pre-line;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 4px solid #007bff;
+            background-color: #f8f9fa;
+        }
+        .error {
+            color: #dc3545;
+            background-color: #f8d7da;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fetal Health Model Test</h1>
+    <div id="output" class="loading">Loading model...</div>
+
+    <script>
+        const output = document.getElementById('output');
+
+        async function testFetalHealthModel() {
+            try {
+                output.className = 'loading';
+                output.textContent = 'Loading model...';
+
+                // Load the model
+                const model = await tf.loadLayersModel('./models/fetal_health_model/model.json');
+
+                output.className = '';
+                output.innerHTML = 'Model loaded successfully\n\n';
+
+                // Test data - 21 features as expected by the model
+                const testInputs = [
+                    // Normal case
+                    [
+                        140.0, 0.1, 0.8, 0.5, 0.0, 0.0, 0.0, 20.0, 8.0, 5.0, 12.0,
+                        50.0, 120.0, 170.0, 3.0, 0.0, 140.0, 145.0, 143.0, 25.0, 0.0
+                    ],
+                    // Suspect case
+                    [
+                        140.0, 0.0, 0.3, 0.5, 0.1, 0.0, 0.0, 50.0, 3.0, 30.0, 4.5,
+                        50.0, 120.0, 170.0, 3.0, 0.0, 140.0, 145.0, 143.0, 25.0, 0.0
+                    ],
+                    // Pathological case
+                    [
+                        140.0, 0.0, 0.1, 0.5, 0.2, 0.1, 0.1, 80.0, 1.0, 60.0, 1.5,
+                        50.0, 120.0, 170.0, 3.0, 0.0, 140.0, 145.0, 143.0, 25.0, 0.0
+                    ]
+                ];
+
+                const classLabels = ['Normal', 'Suspect', 'Pathological'];
+
+                for (let i = 0; i < testInputs.length; i++) {
+                    const inputTensor = tf.tensor2d([testInputs[i]], [1, 21]);
+                    const prediction = model.predict(inputTensor);
+                    const probabilities = await prediction.data();
+
+                    const predictedClass = tf.argMax(probabilities).dataSync()[0];
+                    const confidence = probabilities[predictedClass];
+
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'result';
+                    resultDiv.innerHTML = `
+<strong>Test Case ${i + 1}:</strong><br>
+Predicted Class: ${predictedClass} (${classLabels[predictedClass]})<br>
+Confidence: ${(confidence * 100).toFixed(2)}%<br>
+Probabilities: [${Array.from(probabilities).map(p => (p * 100).toFixed(1) + '%').join(', ')}]
+                    `;
+                    output.appendChild(resultDiv);
+
+                    // Cleanup
+                    inputTensor.dispose();
+                    prediction.dispose();
+                }
+
+                model.dispose();
+                output.innerHTML += '\nModel testing completed successfully!';
+
+            } catch (error) {
+                output.className = 'error';
+                output.textContent = 'Error testing model: ' + error.message;
+                console.error('Error testing model:', error);
+            }
+        }
+
+        testFetalHealthModel();
+    </script>
+</body>
+</html>

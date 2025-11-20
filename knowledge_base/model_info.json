@@ -1,0 +1,5 @@
+{
+  "model_name": "sentence-transformers/LaBSE",
+  "embedding_dim": 768,
+  "num_documents": 17367
+}
