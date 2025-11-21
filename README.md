@@ -1,6 +1,6 @@
 # Afya Tracker Elsa AI
 
-[![Live Demo](https://afyatrackerwebapp.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-3595A5?style=for-the-badge)](https://afyatrackerwebapp.vercel.app/)
 
 ## Overview
 
