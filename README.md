@@ -4,7 +4,7 @@
 
 ## Overview
 
-Afya Tracker Elsa AI is an AI-powered health tracking system designed to assist healthcare providers and patients with fetal health monitoring. The system includes a machine learning model for predicting fetal health status based on cardiotocography (CTG) data.
+Afya Tracker Elsa AI is an AI-powered health tracking system designed to assist healthcare providers and patients with fetal health monitoring, aligning with UN SDG 3 (Good Health and Well-being). The system addresses the challenge of timely fetal health assessment in resource-constrained settings by providing AI-driven predictions based on cardiotocography (CTG) data.
 
 ## Features
 
@@ -182,6 +182,31 @@ flutter run
 ```
 Requires Android Studio or Xcode for device simulation.
 
+## Ethical & Sustainability Checks
+
+- **Bias Mitigation**: Training data is audited for fairness; the model is tested across diverse CTG datasets to minimize bias in predictions.
+- **Environmental Impact**: Models are optimized for lightweight inference to reduce energy consumption, suitable for deployment in low-resource settings.
+- **Scalability**: Designed for offline use and multilingual support, ensuring accessibility in underserved areas.
+
 ## Contributing
 
 This is a healthcare AI project. Please ensure all contributions follow medical data privacy and ethical guidelines.
+
+## Learner Tips
+
+- Start Small: Focus on core features like fetal health prediction before expanding to full apps.
+- Use Open Tools: Leverage Google Colab for model training and GitHub for collaboration.
+- Iterate: Test models frequently and incorporate feedback for improvements.
+- Collaborate: Partner with healthcare NGOs for real-world validation and impact.
+
+## Example SDG-AI Pairings
+
+- SDG 3 (Health): Fetal health monitoring (this project).
+- SDG 4 (Education): AI chatbots for medical training.
+- SDG 7 (Clean Energy): ML for optimizing healthcare facility energy use.
+
+## Reflection Questions
+
+- How does this solution align with SDG 3 targets for maternal and child health?
+- What ethical risks (e.g., data privacy) arise, and how are they addressed?
+- How do software engineering practices like testing ensure long-term sustainability?
