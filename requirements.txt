@@ -9,3 +9,5 @@ tensorflowjs
 PyMuPDF  # For PDF text extraction
 sentence-transformers  # For multilingual embeddings
 torch  # Required for sentence transformers
+faiss-cpu  # For fast similarity search
+requests  # For API calls

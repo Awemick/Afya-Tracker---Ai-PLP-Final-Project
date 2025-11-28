@@ -82,19 +82,34 @@ plt.xlabel('Predicted Label')
 plt.savefig('confusion_matrix.png')
 plt.show()
 
+# Representative dataset for quantization
+def representative_dataset_gen():
+    for _ in range(100):
+        yield [np.random.rand(1, 21).astype(np.float32)]
+
 # Save the model
 model.save('fetal_health_model.h5')
 
-# Convert to TensorFlow Lite
+# Convert to TensorFlow Lite with quantization
 converter = tf.lite.TFLiteConverter.from_keras_model(model)
-tflite_model = converter.convert()
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+converter.representative_dataset = representative_dataset_gen
+tflite_model_quantized = converter.convert()
 
-# Save the TFLite model
+# Save the quantized TFLite model
+with open('fetal_health_model_quantized.tflite', 'wb') as f:
+    f.write(tflite_model_quantized)
+
+# Also save unquantized version
+converter_unquantized = tf.lite.TFLiteConverter.from_keras_model(model)
+tflite_model_unquantized = converter_unquantized.convert()
+
 with open('fetal_health_model.tflite', 'wb') as f:
-    f.write(tflite_model)
+    f.write(tflite_model_unquantized)
 
 print("Model saved as fetal_health_model.h5")
-print("TFLite model saved as fetal_health_model.tflite")
+print(f"TFLite model saved as fetal_health_model.tflite ({len(tflite_model_unquantized)} bytes)")
+print(f"Quantized TFLite model saved as fetal_health_model_quantized.tflite ({len(tflite_model_quantized)} bytes)")
 
 # Save scaler for later use in app
 import joblib
